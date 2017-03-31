@@ -25,13 +25,20 @@ args = parser.parse_args()
 if args.query:
 	q = "curl -s -G "+ args.secure +"://"+ args.ip +":8086/query --data-urlencode db="+ args.database +" --data-urlencode \"q=SELECT mean("+ args.value +") FROM cpu WHERE host='"+ args.host +"' AND time > now() - "+args.time+"\" | awk -F',' '{print $6}'| awk -F] '{printf(\"%.2f\",  $1)}'"
 	result = subprocess.check_output(q, shell=True)
-	print "OK - Host: "+args.host+" "+args.value+" mean: "+result+" - from: "+args.time
-	sys.exit(0)
+	if result is not None:
+		print "OK - Host: "+args.host+" "+args.value+" mean: "+result+" - from: "+args.time
+		sys.exit(0)
+	else:
+		print "CRITICAL - Could not retrieve data"
+		sys.exit(2)
+
 
 if args.version:
-	ver = "curl -sl -I "+ args.secure +"://"+ args.ip +":8086/ping | awk 'NR==4{print}'"
-	os.system(ver)
-	sys.exit(0)
-
-else:
-	sys.exit(2)
+	version = "curl -sl -I "+ args.secure +"://"+ args.ip +":8086/ping | awk 'NR==4{print}'"
+	result = subprocess.check_output(version, shell=True)
+	if result is not None:
+		print result
+		sys.exit(0)
+	else:
+		print "Could not get version"
+		sys.exit(2)
