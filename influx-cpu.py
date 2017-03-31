@@ -20,9 +20,9 @@ args = parser.parse_args()
 
 
 if args.query:
-	q = "curl -s -G "+ args.secure +"://"+ args.ip +":8086/query --data-urlencode db="+ args.database +" --data-urlencode \"q=SELECT mean("+ args.value +") FROM cpu WHERE host='"+ args.host +"' AND time > now() - "+args.time+"\" | awk -F',' '{print $6}'| awk -F] '{printf(\"%.2f\\n\",  $1)}'"
+	q = "curl -s -G "+ args.secure +"://"+ args.ip +":8086/query --data-urlencode db="+ args.database +" --data-urlencode \"q=SELECT mean("+ args.value +") FROM cpu WHERE host='"+ args.host +"' AND time > now() - "+args.time+"\" | awk -F',' '{print $6}'| awk -F] '{printf(\"%.2f\",  $1)}'"
 	result = subprocess.check_output(q, shell=True)
-	print "OK - Host: "+args.host+" "+args.value+" mean: "+result
+	print "OK - Host: "+args.host+" "+args.value+" mean: "+result+" - from: "+args.time
 	sys.exit(0)
 
 if args.version:
