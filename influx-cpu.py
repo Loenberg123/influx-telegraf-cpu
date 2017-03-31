@@ -16,6 +16,9 @@ parser.add_argument("-d", "--database", help="Indica la base de datos para la co
 parser.add_argument("-H", "--host", help="Indica el host para la consulta")
 parser.add_argument("-V", "--value", help="Valor del que se realiza la consulta")
 parser.add_argument("-t", "--time", help="Tiempo desde el que se obtienen los datos. Ns, Nm, Nh")
+if len(sys.argv)==1:
+    parser.print_help()
+    sys.exit(1)
 args = parser.parse_args()
 
 
