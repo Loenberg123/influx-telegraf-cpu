@@ -4,8 +4,7 @@ import sys
 import subprocess
 import argparse
 
-#Es bastante cutrecillo, pero hace lo que se necesita (espero xD).
-#Disponible tambien en https://github.com/Loenberg123/influx-telegraf-cpu
+#Disponible en https://github.com/Loenberg123/influx-telegraf-cpu
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-Q", "--query", help="Realizar consulta", action="store_true")
